@@ -3,6 +3,18 @@
 </h2> -->
 <a name="" id="" class="btn btn-primary m-2" [routerLink]="['/NewProduct']" role="button">Add Product</a>
 <hr>
+
+<div class="store-info my-3">
+  <h3>{{ StoreInfo.name }}</h3>
+  <img [src]="StoreInfo.imgURL" alt="Store Logo" class="store-logo" />
+  <div>
+    <strong>Branches:</strong>
+    <ul>
+      <li *ngFor="let branch of StoreInfo.branches">{{ branch }}</li>
+    </ul>
+  </div>
+</div>
+
 <table class="table my-3">
   <thead class="bg-dark text-light">
     <tr>
@@ -15,46 +27,32 @@
       <th scope="col">Details</th>
       <th scope="col">Items count</th>
       <th scope="col">Add to Cart</th>
+    </tr>
   </thead>
   <tbody>
-    <!-- <tr *ngFor="let prd of prdList" [class.bg-warning]="prd.quantity==0"> -->
-    <!-- <tr [hidden]="prd.quantity==0" *ngFor="let prd of prdList; let i=index; trackBy: productsTrackBy" [style.background-color]="(prd.quantity==0)? 'lightyellow':'lightgray'"> -->
-    <ng-container *ngFor="let prd of prdListOfCat; let i=index; trackBy: productsTrackBy">
-      <!-- <tr *ngIf="prd.quantity!=0" [style.background-color]="(prd.quantity==0)? 'lightyellow':'lightgray'"> -->
-      <!-- <tr [style.background-color]="(prd.quantity==0)? 'lightyellow':'lightgray'"> -->
-      <tr [ngStyle]="{'background-color':prd.quantity==0? 'lightyellow':'lightgray', 'color':prd.quantity==0? 'red':'darkblue'}">
-
+    <ng-container *ngFor="let prd of prdListOfCat; let i = index; trackBy: productsTrackBy">
+      <tr [ngStyle]="{'background-color': prd.quantity == 0 ? 'lightyellow' : 'lightgray', 'color': prd.quantity == 0 ? 'red' : 'darkblue'}">
+        <td>{{ i + 1 }}</td>
+        <td>{{ prd.name }}</td>
+        <td><img LightBox="yellow" defaultColor="white" [src]="prd.imgURL" alt="Product Image"></td>
+        <td>{{ prd.price | currency: 'USD' : 'code' }}</td>
+        <td>{{ prd.price | USDtoEGP:20 | currency: 'EGP' }}</td>
         <td>
-          <!-- {{prd.id}} -->
-          {{i+1}}
-        </td>
-        <td>{{prd.name}}</td>
-        <!-- <td><img LightBox highlightColor="yellow" [src]="prd.imgURL" alt="prd"></td> -->
-        <td><img LightBox="yellow" defaultColor="white" [src]="prd.imgURL" alt="prd"></td>
-        <td>{{prd.price | currency: 'USD' : 'code'}}</td>
-        <td>{{prd.price | USDtoEGP:20 | currency: 'EGP'}}</td>
-        <td>
-          <!--
-            <div *ngIf="prd.quantity==0">Out of stock</div>
-          <div *ngIf="prd.quantity!=0">{{prd.quantity}}</div>
-        -->
-          <!-- <div *ngIf="prd.quantity!=0; else outOfStock">{{prd.quantity}}</div>
-          <ng-template #outOfStock>Out of stock</ng-template> -->
           <ng-container [ngSwitch]="prd.quantity">
             <div *ngSwitchCase="0">Out of Stock</div>
             <div *ngSwitchCase="1">Last Item</div>
             <div *ngSwitchCase="2">Last 2 items</div>
-            <div *ngSwitchDefault>{{prd.quantity}}</div>
+            <div *ngSwitchDefault>{{ prd.quantity }}</div>
           </ng-container>
         </td>
-        <!-- <td><button type="button" class="btn btn-secondary" (click)="openProductDetails(prd.id)">Details</button></td> -->
-        <td><a name="" id="" class="btn btn-primary"  role="button" [routerLink]="['/Products', prd.id]">Details</a></td>
-        <td><input #itemsCount type="number" class="form-control"></td>
-        <td><button type="button" class="btn btn-secondary" (click)="updateOrderTotalPrice(+itemsCount.value,prd.price)">Add to cart</button></td>
+        <td><a class="btn btn-primary" role="button" [routerLink]="['/Products', prd.id]">Details</a></td>
+        <td><input #itemsCount type="number" class="form-control" min="1" max="{{ prd.quantity }}" [disabled]="prd.quantity === 0"></td>
+        <td><button type="button" class="btn btn-secondary" (click)="updateOrderTotalPrice(+itemsCount.value, prd.price)">Add to cart</button></td>
       </tr>
     </ng-container>
   </tbody>
 </table>
+
 <div class="bg-danger">
   <!-- <h3>[For Test] To be removed:
     <br>
