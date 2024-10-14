@@ -1,6 +1,23 @@
-ul{
-
-  list-style: none;
-
+ul {
+  list-style: none;        /* Remove default list bullets */
+  padding: 0;              /* Remove default padding */
+  margin: 0;               /* Remove default margin */
 }
 
+li {
+  margin-bottom: 15px;     /* Add space between list items */
+}
+
+a {
+  text-decoration: none;   /* Remove underline from links */
+  color: #333;             /* Set link color */
+  display: block;          /* Make the entire list item clickable */
+  padding: 10px 15px;      /* Add padding inside the list items */
+  border-radius: 5px;      /* Round corners of the links */
+  background-color: #f0f0f0; /* Background color */
+}
+
+a:hover {
+  background-color: #ddd;  /* Change background on hover */
+  color: #000;             /* Change text color on hover */
+}

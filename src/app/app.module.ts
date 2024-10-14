@@ -19,6 +19,8 @@ import { MainLayoutComponent } from './Components/main-layout/main-layout.compon
 import { ProductDetailsComponent } from './Components/product-details/product-details.component';
 import { AddProductComponent } from './Components/add-product/add-product.component';
 import { UserRegisterComponent } from './Components/user-register/user-register.component';
+import { ProductCardDirective } from './Components/products/product-card.directive';
+import { ShoppingCartComponent } from './Components/shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,10 @@ import { UserRegisterComponent } from './Components/user-register/user-register.
     MainLayoutComponent,
     ProductDetailsComponent,
     AddProductComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    ProductCardDirective,
+    ShoppingCartComponent,
+    
   ],
   imports: [
     BrowserModule,

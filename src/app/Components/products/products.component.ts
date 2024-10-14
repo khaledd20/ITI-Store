@@ -34,6 +34,8 @@ export class ProductsComponent implements OnInit, OnChanges {
     { id: 1, name: 'Black T-Shirt', price: 10, imgURL: 'assets/BlackTShirt.png', quantity: 5, catID:1 },
     { id: 2, name: 'Blue Jeans', price: 20, imgURL: 'assets/BlackTShirt.png', quantity: 3, catID:2 },
     { id: 3, name: 'Green Jacket', price: 15, imgURL: 'assets/BlackTShirt.png', quantity: 1, catID:3 },
+    { id: 4, name: 'white dress', price: 40, imgURL: 'assets/BlackTShirt.png', quantity: 0, catID:3 },
+
     // Add more products as needed
   ];
 
@@ -47,13 +49,14 @@ export class ProductsComponent implements OnInit, OnChanges {
 
 
     // Method to filter products by selected category
-    filterProductsByCategory() {
+       filterProductsByCategory() {
       if (this.selectedCategoryID) {
-        this.filteredProductList = this.ProductList.filter(product => product.catID === +this.selectedCategoryID);
+        this.filteredProductList = this.ProductList.filter(product => product.catID === +this.selectedCategoryID && product.quantity > 0);
       } else {
-        this.filteredProductList = this.ProductList; // Reset to all products if no category is selected
+        this.filteredProductList = this.ProductList.filter(product => product.quantity > 0); // Show only products with quantity > 0
       }
     }
+
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.receivedSelCatID);
     /*this.prdAPIService.getProductsByCatID(this.receivedSelCatID).subscribe({
@@ -90,4 +93,13 @@ export class ProductsComponent implements OnInit, OnChanges {
   togglePurchase() {
     this.isPurchased = true; // Set the purchased flag
   }
+
+  // Method to buy a product and decrease quantity
+  buyProduct(product: IProduct) {
+    if (product.quantity > 0) {
+      product.quantity -= 1; // Decrease quantity by 1
+      this.filterProductsByCategory(); // Refresh filtered product list
+    }
+  }
+  
 }

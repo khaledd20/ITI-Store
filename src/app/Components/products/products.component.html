@@ -59,8 +59,19 @@
   </thead>
   <tbody>
     <ng-container *ngFor="let prd of filteredProductList; let i = index; trackBy: productsTrackBy">
-      <tr [ngStyle]="{'background-color': prd.quantity == 0 ? 'lightyellow' : 'lightgray', 'color': prd.quantity == 0 ? 'red' : 'darkblue'}">
-        <td>{{ i + 1 }}</td>
+      
+      <tr 
+        appProductCard
+        [bgColor]="prd.quantity > 1 ? 'lightgray' : 'lightyellow'" 
+        [ngClass]="{
+          'bg-warning': prd.quantity === 1,
+          'bg-light': prd.quantity > 1
+        }"
+        [ngStyle]="{
+          'color': prd.quantity === 0 ? 'red' : 'darkblue'
+        }"
+      >
+       <td>{{ i + 1 }}</td>
         <td>{{ prd.name }}</td>
         <td><img LightBox="yellow" defaultColor="white" [src]="prd.imgURL" alt="Product Image"></td>
         <td>{{ prd.price | currency: 'USD' : 'code' }}</td>
@@ -76,6 +87,8 @@
         <td><a class="btn btn-primary" role="button" [routerLink]="['/Products', prd.id]">Details</a></td>
         <td><input #itemsCount type="number" class="form-control" min="1" max="{{ prd.quantity }}" [disabled]="prd.quantity === 0"></td>
         <td><button type="button" class="btn btn-secondary" (click)="updateOrderTotalPrice(+itemsCount.value, prd.price)">Add to cart</button></td>
+        <td><button type="button" class="btn btn-danger" (click)="buyProduct(prd)">Buy</button></td> <!-- Buy button -->
+
       </tr>
     </ng-container>
   </tbody>
