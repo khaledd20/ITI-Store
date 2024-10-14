@@ -1,6 +1,6 @@
-<!-- <h2>
+<h2>
   Time now: {{todayDate | date: 'mediumTime'}}
-</h2> -->
+</h2>
 <a name="" id="" class="btn btn-primary m-2" [routerLink]="['/NewProduct']" role="button">Add Product</a>
 <hr>
 
@@ -15,7 +15,35 @@
   </div>
 </div>
 
-<table class="table my-3">
+<!-- Dropdown for Categories -->
+<div class="form-group">
+  <label for="categorySelect">Select Category:</label>
+  <select id="categorySelect" class="form-control" [(ngModel)]="selectedCategoryID" (change)="filterProductsByCategory()">
+    <option value="">Select a category</option> <!-- Optional: Default option -->
+    <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+  </select>
+</div>
+
+
+
+
+<!-- Input for Client Name -->
+<div class="form-group">
+  <label for="clientName">Enter Your Name:</label>
+  <input type="text" id="clientName" class="form-control" [(ngModel)]="ClientName" placeholder="Your Name">
+</div>
+
+<!-- Buy Button -->
+<button class="btn btn-success my-2" (click)="togglePurchase()">Buy</button>
+
+<!-- ng-template for Thank You Message -->
+<ng-template #purchaseTemplate>
+  <div class="alert alert-success my-3">
+    Thanks for purchasing from our store, {{ ClientName }}!
+  </div>
+</ng-template>
+  
+<table class="table my-3" *ngIf="!isPurchased; else purchaseTemplate">
   <thead class="bg-dark text-light">
     <tr>
       <th scope="col">#</th>
@@ -30,7 +58,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let prd of prdListOfCat; let i = index; trackBy: productsTrackBy">
+    <ng-container *ngFor="let prd of filteredProductList; let i = index; trackBy: productsTrackBy">
       <tr [ngStyle]="{'background-color': prd.quantity == 0 ? 'lightyellow' : 'lightgray', 'color': prd.quantity == 0 ? 'red' : 'darkblue'}">
         <td>{{ i + 1 }}</td>
         <td>{{ prd.name }}</td>
@@ -53,9 +81,10 @@
   </tbody>
 </table>
 
+
 <div class="bg-danger">
-  <!-- <h3>[For Test] To be removed:
+  <h3>[For Test] To be removed:
     <br>
     Total price in nested component: {{orderTotalPrice}}
-  </h3> -->
+  </h3>
 </div>
