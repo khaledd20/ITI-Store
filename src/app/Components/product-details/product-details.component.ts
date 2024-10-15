@@ -18,19 +18,19 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   currPrd:IProduct|undefined=undefined;
   constructor(private activatedRoute:ActivatedRoute
             , private router: Router
-            // , private prdService:ProductsService
+             , private prdService:ProductsService
             , private prdSericeAP: ProductsAPIService
             , private location: Location) { }
 
 
   ngOnInit(): void {
-    // this.prdIDsList=this.prdService.getPrdIDsList();
+    this.prdIDsList=this.prdService.getPrdIDsList();
     // this.currPrdID=Number(this.activatedRoute.snapshot.paramMap.get("pid"));
     // this.currPrd=this.prdService.getProductByID(this.currPrdID);
-    // this.activatedRoute.paramMap.subscribe(paramMap=>{
-    //   this.currPrdID=Number(paramMap.get("pid"));
-    //   this.currPrd=this.prdService.getProductByID(this.currPrdID);
-    // });
+     this.activatedRoute.paramMap.subscribe(paramMap=>{
+       this.currPrdID=Number(paramMap.get("pid"));
+       this.currPrd=this.prdService.getProductByID(this.currPrdID);
+     });
 
     // let sub=this.activatedRoute.paramMap.subscribe({
     //   next: (data)=>{},

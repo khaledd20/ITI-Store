@@ -9,8 +9,8 @@ export class ProductsService {
   constructor() {
     this.prdList = [
       { id: 1, name: 'Lenovo X230 laptop', price: 100, quantity: 10, imgURL: 'https://fakeimg.pl/150x100', catID: 1 },
-      { id: 5, name: 'MacBook Pro', price: 200, quantity: 0, imgURL: 'https://fakeimg.pl/150x100', catID: 1 },
-      { id: 10, name: 'Samsung Tab 3', price: 300, quantity: 1, imgURL: 'https://fakeimg.pl/150x100', catID: 2 },
+      { id: 2, name: 'MacBook Pro', price: 200, quantity: 0, imgURL: 'https://fakeimg.pl/150x100', catID: 1 },
+      { id: 3, name: 'Samsung Tab 3', price: 300, quantity: 1, imgURL: 'https://fakeimg.pl/150x100', catID: 2 },
       { id: 12, name: 'IPad', price: 400, quantity: 2, imgURL: 'https://fakeimg.pl/150x100', catID: 2 },
       { id: 15, name: 'Samsung S22 Ultra', price: 10500, quantity: 10, imgURL: 'https://fakeimg.pl/150x100', catID: 3 },
       { id: 17, name: 'Iphone 13 pro', price: 345678, quantity: 0, imgURL: 'https://fakeimg.pl/150x100', catID: 3 }
@@ -39,9 +39,11 @@ export class ProductsService {
     this.prdList.push(prd);
   }
 
-  // getPrdIDsList(): number[]
-  // {
-  //   // return this.prdList.map(prd=>prd.id);
-  // }
+  getPrdIDsList(): number[] {
+    return this.prdList
+      .map(prd => prd.id)
+      .filter((id): id is number => id !== undefined);  // Filter out undefined values
+  }
+  
 
 }
